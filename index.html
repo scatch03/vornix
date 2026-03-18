@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vornix — Software Quality Assurance</title>
+  <meta name="description"
+    content="Vornix provides expert software testing, QA auditing, and test automation services. Based in Bratislava, serving clients worldwide.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cream: #f8f5f0;
+      --ink: #1a1a1a;
+      --ink-light: #555;
+      --ink-faint: #999;
+      --green: #22c55e;
+      --green-bg: #ecfdf5;
+      --red: #ef4444;
+      --red-bg: #fef2f2;
+      --amber: #f59e0b;
+      --blue: #3b82f6;
+      --terminal-bg: #1e1e2e;
+      --terminal-text: #cdd6f4;
+      --border: #e5e0d8;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'DM Sans', -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(248, 245, 240, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    nav.scrolled {
+      border-bottom-color: var(--border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo img {
+      height: 48px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--ink-light);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.55rem 1.3rem;
+      border-radius: 100px;
+      transition: background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(26, 26, 26, 0.08);
+      color: var(--ink);
+    }
+
+    .nav-links a.active {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .nav-links a.active:hover {
+      background: var(--ink);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 2.2rem;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8rem 3rem 4rem;
+    }
+
+    .hero > *:last-child {
+      align-self: stretch;
+    }
+
+    .hero-left h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 5.5vw, 4.5rem);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-left h1 em {
+      font-style: italic;
+      color: var(--ink);
+      position: relative;
+    }
+
+    .hero-left h1 em::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: rgba(34, 197, 94, 0.25);
+      z-index: -1;
+      border-radius: 2px;
+    }
+
+    .hero-left p {
+      font-size: 1.1rem;
+      color: var(--ink-light);
+      max-width: 440px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: 100px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      font-family: var(--sans);
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-dark {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .btn-dark:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--ink);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ── TERMINAL ── */
+    .terminal {
+      background: var(--terminal-bg);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.18),
+        0 8px 20px rgba(0, 0, 0, 0.1),
+        0 2px 6px rgba(0, 0, 0, 0.06),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+      transform: perspective(800px) rotateY(-15deg) rotateX(0deg);
+      transition: transform 0.4s ease;
+    }
+
+    .terminal:hover {
+      transform: perspective(800px) rotateY(0deg) rotateX(0deg);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot.r {
+      background: #ff5f57;
+    }
+
+    .terminal-dot.y {
+      background: #febc2e;
+    }
+
+    .terminal-dot.g {
+      background: #28c840;
+    }
+
+    .terminal-title {
+      flex: 1;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.3);
+      margin-right: 40px;
+    }
+
+    .terminal-body {
+      padding: 1.25rem 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      line-height: 1.9;
+      color: var(--terminal-text);
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .t-green {
+      color: #a6e3a1;
+    }
+
+    .t-red {
+      color: #f38ba8;
+    }
+
+    .t-yellow {
+      color: #f9e2af;
+    }
+
+    .t-blue {
+      color: #89b4fa;
+    }
+
+    .t-dim {
+      color: #585b70;
+    }
+
+    .t-bold {
+      font-weight: 500;
+    }
+
+    .terminal-line {
+      opacity: 0;
+      transform: translateY(4px);
+      animation: typeIn 0.3s ease forwards;
+    }
+
+    @keyframes typeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cursor-blink::after {
+      content: '\2588';
+      animation: blink 1s step-end infinite;
+      color: #cba6f7;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-section {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      margin-top: -1px;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 30s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-item {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink-faint);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .marquee-item::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      background: var(--green);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 3rem;
+    }
+
+    .section-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--ink-faint);
+    }
+
+    .section-heading {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .service-card {
+      background: var(--cream);
+      padding: 2.25rem;
+      transition: background 0.3s;
+      position: relative;
+    }
+
+    .service-card:hover {
+      background: #fff;
+    }
+
+    .service-num {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .service-card h3 {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin-bottom: 0.6rem;
+    }
+
+    .service-card p {
+      font-size: 0.875rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+    }
+
+    .service-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      background: var(--green-bg);
+      color: #15803d;
+    }
+
+    /* ── PROCESS ── */
+    .process-section {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 6rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-section .section-eyebrow {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .process-section .section-eyebrow::before {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .process-section .section-sub {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .process-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .process-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: 40px;
+      right: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    }
+
+    .process-step {
+      padding: 0 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .step-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.4);
+      background: var(--ink);
+      transition: all 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .process-step:hover .step-circle {
+      border-color: var(--green);
+      color: var(--green);
+      background: color-mix(in srgb, var(--green) 8%, var(--ink));
+    }
+
+    .process-step h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .process-step p {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.6;
+      transition: color 0.35s ease;
+    }
+
+    .process-step:hover p {
+      color: rgba(255, 255, 255, 1);
+    }
+
+    /* ── ABOUT ── */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-left .section-heading {
+      margin-bottom: 1.5rem;
+    }
+
+    .about-left p {
+      color: var(--ink-light);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .about-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .about-card {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.3s;
+      background: transparent;
+    }
+
+    .about-card:hover {
+      background: #fff;
+      border-color: #ddd;
+    }
+
+    .about-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.4rem;
+    }
+
+    .about-card-icon.green-bg {
+      background: var(--green-bg);
+    }
+
+    .about-card-icon.blue-bg {
+      background: #eff6ff;
+    }
+
+    .about-card-icon.amber-bg {
+      background: #fffbeb;
+    }
+
+    .about-card-icon.red-bg {
+      background: var(--red-bg);
+    }
+
+    .about-card h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .about-card p {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      line-height: 1.55;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 6rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .cta-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 5rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.08), transparent 70%);
+      top: -100px;
+      right: -50px;
+      pointer-events: none;
+    }
+
+    .cta-card::after {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.06), transparent 70%);
+      bottom: -80px;
+      left: -30px;
+      pointer-events: none;
+    }
+
+    .cta-card h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta-card p {
+      color: var(--ink-light);
+      margin-bottom: 2rem;
+      position: relative;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-card .btn {
+      position: relative;
+    }
+
+    .cta-form {
+      position: relative;
+      max-width: 480px;
+      margin: 0 auto;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cta-form label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+
+    .cta-form input,
+    .cta-form textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      background: var(--cream);
+      color: var(--ink);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .cta-form input:focus,
+    .cta-form textarea:focus {
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.06);
+    }
+
+    .cta-form textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .cta-form .btn {
+      align-self: flex-end;
+      margin-top: 0.5rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-text {
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--ink);
+    }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Fallback: if JS hasn't added .js-ready to body, show everything */
+    body:not(.js-ready) .reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(248, 245, 240, 0.98);
+        padding: 0 1.5rem;
+        border-bottom: 1px solid transparent;
+        gap: 0;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease, gap 0.4s ease, border-color 0.3s ease;
+      }
+
+      .nav-links.open {
+        max-height: 400px;
+        opacity: 1;
+        padding: 1.5rem;
+        gap: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 7rem 1.5rem 3rem;
+        gap: 2.5rem;
+      }
+
+      .terminal {
+        transform: none;
+        height: 620px;
+      }
+
+      .section {
+        padding: 4rem 1.5rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-timeline {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .process-timeline::before {
+        display: none;
+      }
+
+      .about-layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .process-inner {
+        padding: 0 1.5rem;
+      }
+
+      .cta-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .cta-card {
+        padding: 3rem 1.5rem;
+      }
+
+      footer {
+        padding: 2rem 1.5rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .process-timeline {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo"><img src="assets/logo-dark-transparent.png" alt="Vornix"></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+      <a href="#contact">Let's talk</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">&#9776;</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <h1 class="reveal">QA That Ships <em>Confidence</em></h1>
+      <p class="reveal">Vornix helps product teams reduce risk before release through practical testing strategy,
+        process audits, and clear quality reporting.</p>
+      <div class="hero-buttons reveal">
+        <a href="#contact" class="btn btn-dark">Start a conversation &rarr;</a>
+        <a href="#services" class="btn btn-outline">See what we do</a>
+      </div>
+    </div>
+    <div class="hero-right reveal">
+      <div class="terminal" id="terminal">
+        <div class="terminal-bar">
+          <span class="terminal-dot r"></span>
+          <span class="terminal-dot y"></span>
+          <span class="terminal-dot g"></span>
+          <span class="terminal-title">vornix &mdash; test runner</span>
+        </div>
+        <div class="terminal-body" id="terminalBody"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item">Manual Testing</span>
+      <span class="marquee-item">Automated Testing</span>
+      <span class="marquee-item">QA Auditing</span>
+      <span class="marquee-item">Test Planning</span>
+      <span class="marquee-item">Requirements Analysis</span>
+      <span class="marquee-item">Bug Tracking</span>
+      <span class="marquee-item">Quality Reporting</span>
+      <span class="marquee-item">CI/CD Integration</span>
+      <span class="marquee-item">Tool Selection</span>
+      <span class="marquee-item">Risk Assessment</span>
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-item">Manual Testing</span>
+      <span class="marquee-item">Automated Testing</span>
+      <span class="marquee-item">QA Auditing</span>
+      <span class="marquee-item">Test Planning</span>
+      <span class="marquee-item">Requirements Analysis</span>
+      <span class="marquee-item">Bug Tracking</span>
+      <span class="marquee-item">Quality Reporting</span>
+      <span class="marquee-item">CI/CD Integration</span>
+      <span class="marquee-item">Tool Selection</span>
+      <span class="marquee-item">Risk Assessment</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="reveal">
+      <div class="section-eyebrow">Services</div>
+      <h2 class="section-heading">Everything you need to<br>ship with confidence</h2>
+      <p class="section-sub">From evaluating your current QA setup to building end-to-end automation — we cover the full
+        testing lifecycle.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>QA Process Evaluation</h3>
+        <p>Expert assessment of your testing workflows, coverage gaps, and quality assurance maturity.</p>
+        <span class="service-tag">Audit</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>Test Strategy & Automation</h3>
+        <p>Designing and implementing manual + automated testing strategies tailored to your stack.</p>
+        <span class="service-tag">Strategy</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Requirements Analysis</h3>
+        <p>Reviewing technical documentation to assess quality, identify risks, and prevent blind spots.</p>
+        <span class="service-tag">Analysis</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <h3>Test Planning</h3>
+        <p>Building technical specs, test plans, cases, and checklists for systematic quality control.</p>
+        <span class="service-tag">Planning</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <h3>QA Auditing</h3>
+        <p>Comprehensive audit of existing testing processes with actionable improvement roadmaps.</p>
+        <span class="service-tag">Audit</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <h3>Quality Reporting</h3>
+        <p>Regular analytics, dashboards, and assessments giving visibility into software quality levels.</p>
+        <span class="service-tag">Reporting</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">07</div>
+        <h3>Tooling Consultation</h3>
+        <p>Selecting the right tools for test management, bug tracking, and reporting workflows.</p>
+        <span class="service-tag">Tooling</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process-section" id="process">
+    <div class="process-inner">
+      <div class="reveal">
+        <div class="section-eyebrow">Process</div>
+        <h2 class="section-heading" style="color: var(--cream)">How an engagement works</h2>
+        <p class="section-sub">A structured, transparent approach from day one.</p>
+      </div>
+      <div class="process-timeline reveal">
+        <div class="process-step">
+          <div class="step-circle">01</div>
+          <h3>Discover</h3>
+          <p>Audit your current QA setup, docs, and workflows to establish a baseline.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-circle">02</div>
+          <h3>Strategize</h3>
+          <p>Design a tailored test strategy covering tools, automation, and risk priorities.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-circle">03</div>
+          <h3>Execute</h3>
+          <p>Implement test plans, build automation, and integrate into your pipeline.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-circle">04</div>
+          <h3>Iterate</h3>
+          <p>Continuous reporting with actionable insights, release after release.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="about-layout">
+      <div class="about-left reveal">
+        <div class="section-eyebrow">Why Vornix</div>
+        <h2 class="section-heading">Quality isn't a phase.<br>It's a practice.</h2>
+        <p>We partner with product teams to embed rigorous quality practices that scale with your product. No silos, no
+          afterthoughts — testing that lives alongside development from sprint one.</p>
+      </div>
+      <div class="about-cards reveal">
+        <div class="about-card">
+          <div class="about-card-icon green-bg"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+          <div>
+            <h4>Risk-first approach</h4>
+            <p>Every test plan is built around your product's unique risk profile and business priorities.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon blue-bg"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+          <div>
+            <h4>Automation that scales</h4>
+            <p>Smart automation means fewer regressions, faster feedback loops, and quicker releases.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon amber-bg"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div>
+            <h4>Embedded, not outsourced</h4>
+            <p>We work as an extension of your engineering team — same tools, same rituals, same goals.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon red-bg"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div>
+            <h4>Bratislava to everywhere</h4>
+            <p>Based in Slovakia's capital, working with clients across Europe and beyond.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="cta-card reveal">
+      <h2>Let's talk about your<br>testing challenges</h2>
+      <p>Whether you need a full QA audit or help scaling your automation — we're here to help.</p>
+      <form class="cta-form" onsubmit="event.preventDefault()">
+        <div>
+          <label for="cta-name">Name</label>
+          <input type="text" id="cta-name" placeholder="Your name" required>
+        </div>
+        <div>
+          <label for="cta-email">Email</label>
+          <input type="email" id="cta-email" placeholder="you@company.com" required>
+        </div>
+        <div>
+          <label for="cta-message">Message</label>
+          <textarea id="cta-message" placeholder="Tell us about your project and QA needs..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-dark">Send message &rarr;</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-text">&copy; 2025 Vornix s.r.o. &middot; Bratislava, Slovakia</div>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#about">About</a>
+        <a href="mailto:hello@vornix.sk">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mark JS as ready so reveal animations work
+    document.body.classList.add('js-ready');
+
+    // Nav scroll + scrollspy
+    const nav = document.querySelector('nav');
+    const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+    const spySections = [];
+    navAnchors.forEach(a => {
+      const id = a.getAttribute('href').substring(1);
+      const el = document.getElementById(id);
+      if (el) spySections.push({ id, el, link: a });
+    });
+
+    function updateScrollspy() {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+      const scrollPos = window.scrollY + window.innerHeight / 3;
+      let activeId = null;
+      for (let i = spySections.length - 1; i >= 0; i--) {
+        if (spySections[i].el.offsetTop <= scrollPos) {
+          activeId = spySections[i].id;
+          break;
+        }
+      }
+      navAnchors.forEach(a => {
+        const id = a.getAttribute('href').substring(1);
+        a.classList.toggle('active', id === activeId);
+      });
+    }
+
+    window.addEventListener('scroll', updateScrollspy, { passive: true });
+    updateScrollspy();
+
+    // Mobile menu
+    const toggle = document.getElementById('menuToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+    // Scroll reveal
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Terminal animation
+    const terminalLines = [
+      { text: '<span class="t-dim">$</span> <span class="t-bold">vornix</span> run --suite regression', delay: 0 },
+      { text: '', delay: 400 },
+      { text: '<span class="t-blue">PASS</span>  auth/login.spec.ts', delay: 700 },
+      { text: '  <span class="t-green">&#10003;</span> should authenticate valid credentials <span class="t-dim">(42ms)</span>', delay: 900 },
+      { text: '  <span class="t-green">&#10003;</span> should reject invalid password <span class="t-dim">(18ms)</span>', delay: 1050 },
+      { text: '  <span class="t-green">&#10003;</span> should handle session expiry <span class="t-dim">(55ms)</span>', delay: 1200 },
+      { text: '', delay: 1400 },
+      { text: '<span class="t-blue">PASS</span>  payments/checkout.spec.ts', delay: 1600 },
+      { text: '  <span class="t-green">&#10003;</span> should process valid payment <span class="t-dim">(127ms)</span>', delay: 1800 },
+      { text: '  <span class="t-green">&#10003;</span> should apply discount codes <span class="t-dim">(89ms)</span>', delay: 1950 },
+      { text: '  <span class="t-green">&#10003;</span> should handle declined cards <span class="t-dim">(34ms)</span>', delay: 2100 },
+      { text: '', delay: 2350 },
+      { text: '<span class="t-blue">PASS</span>  api/endpoints.spec.ts', delay: 2500 },
+      { text: '  <span class="t-green">&#10003;</span> GET /users responds 200 <span class="t-dim">(12ms)</span>', delay: 2650 },
+      { text: '  <span class="t-green">&#10003;</span> POST /orders validates schema <span class="t-dim">(67ms)</span>', delay: 2800 },
+      { text: '  <span class="t-green">&#10003;</span> Rate limiting returns 429 <span class="t-dim">(201ms)</span>', delay: 2950 },
+      { text: '', delay: 3200 },
+      { text: '<span class="t-dim">───────────────────────────────</span>', delay: 3400 },
+      { text: '<span class="t-bold">Test Suites:</span>  <span class="t-green">3 passed</span>, 3 total', delay: 3600 },
+      { text: '<span class="t-bold">Tests:</span>       <span class="t-green">9 passed</span>, 9 total', delay: 3750 },
+      { text: '<span class="t-bold">Time:</span>        <span class="t-dim">0.645s</span>', delay: 3900 },
+      { text: '', delay: 4100 },
+      { text: '<span class="t-green t-bold">All tests passed.</span> <span class="cursor-blink"></span>', delay: 4300 },
+    ];
+
+    function runTerminal() {
+      const body = document.getElementById('terminalBody');
+      body.innerHTML = '';
+      terminalLines.forEach(({ text, delay }, i) => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = 'terminal-line';
+          div.style.animationDelay = '0s';
+          div.innerHTML = text || '&nbsp;';
+          body.appendChild(div);
+          body.scrollTop = body.scrollHeight;
+        }, delay);
+      });
+    }
+
+    // Run on load and loop
+    const termObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          runTerminal();
+          setInterval(runTerminal, 8000);
+          termObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    termObs.observe(document.getElementById('terminal'));
+  </script>
+</body>
+
+</html>
