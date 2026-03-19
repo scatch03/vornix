@@ -55,15 +55,18 @@
     /* ── NAV ── */
     nav {
       position: fixed;
-      top: 0;
+      top: -50px;
       left: 0;
       right: 0;
       z-index: 100;
-      padding: calc(1.25rem + env(safe-area-inset-top, 0px)) calc(3rem + env(safe-area-inset-right, 0px)) 1.25rem calc(3rem + env(safe-area-inset-left, 0px));
+      padding: 1.25rem 3rem;
+      padding-top: calc(1.25rem + 50px + env(safe-area-inset-top, 0px));
+      padding-left: calc(3rem + env(safe-area-inset-left, 0px));
+      padding-right: calc(3rem + env(safe-area-inset-right, 0px));
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(248, 245, 240, 0.95);
+      background: rgba(248, 245, 240, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid transparent;
@@ -821,7 +824,8 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav {
-        padding: calc(1rem + env(safe-area-inset-top, 0px)) calc(1.5rem + env(safe-area-inset-right, 0px)) 1rem calc(1.5rem + env(safe-area-inset-left, 0px));
+        padding: 1rem 1.5rem;
+        padding-top: calc(1rem + env(safe-area-inset-top, 0px));
       }
 
       .nav-links {
