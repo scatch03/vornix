@@ -73,6 +73,18 @@
       transition: border-color 0.3s;
     }
 
+    nav::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(248, 245, 240, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
     nav.scrolled {
       border-bottom-color: var(--border);
     }
